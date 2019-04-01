@@ -1,0 +1,29 @@
+mat-card {
+    width: 500px;
+    height: 400px;
+    margin: auto;
+    top: 70px;
+}
+
+.avatar {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto;
+    bottom: 20px;
+    background-repeat: no-repeat;
+    padding-bottom: 20px;
+}
+
+mat-form-field {
+    display: block;
+    width: 80%;
+    margin: auto;
+}
+.login {
+    margin: 0 35%;
+}
+
+.login button {
+    border-radius: 10px;
+    padding: 3px 60px;
+}
