@@ -1,18 +1,21 @@
 <mat-card>
   <div class="avatar" [ngStyle]="{'background-image': 'url(../assets/' + avatar + '-eyes-01.png)'}"></div>
-  <mat-form-field appearance="outline">
-    <mat-label>Email*</mat-label>
-    <input matInput placeholder="Enter Email" [formControl]="email">
-    <mat-icon matSuffix>account_circle</mat-icon>
-    <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Password*</mat-label>
-    <input matInput placeholder="Enter Password" [type]="passwordHide ? 'password' : 'text'" [formControl]="password" (keyup)="onChangeAvatar()">
-    <mat-icon matSuffix style="cursor: pointer;" (click)="passwordHide = !passwordHide">{{passwordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
-  </mat-form-field>
-  <div class="login">
-    <button mat-raised-button color="primary">Submit</button>
-  </div>
+  <form [formGroup]="crazyForm" (ngSubmit)="onFormSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Email*</mat-label>
+      <input matInput placeholder="Enter Email" formControlName="email">
+      <mat-icon matSuffix>account_circle</mat-icon>
+      <mat-error *ngIf="controls.email.errors && controls.email.errors.required">*Email required</mat-error>
+      <mat-error *ngIf="controls.email.errors && controls.email.errors.email">Invalid Email</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password*</mat-label>
+      <input matInput placeholder="Enter Password" [type]="passwordHide ? 'password' : 'text'" formControlName="password" (keyup)="onChangeAvatar()">
+      <mat-icon matSuffix style="cursor: pointer;" (click)="passwordHide = !passwordHide">{{passwordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <mat-error *ngIf="controls.password.errors && controls.password.errors.required">*Password required</mat-error>
+    </mat-form-field>
+    <div class="login">
+      <button mat-raised-button color="primary" [disabled]="crazyForm.invalid">Submit</button>
+    </div>
+  </form>
 </mat-card>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -9,21 +9,26 @@ import { FormControl, Validators } from '@angular/forms';
 export class AppComponent implements OnInit {
   avatar: string = "open";
   passwordHide: boolean = true;
-  email: FormControl = new FormControl('', [Validators.required, Validators.email]);
-  password: FormControl = new FormControl('', [Validators.required]);
+  crazyForm: FormGroup;
 
-  constructor() { }
+  constructor(public fb: FormBuilder) { }
 
   ngOnInit() {
+    this.crazyForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
+    })
   }
-  getEmailErrorMessage() {
-    return this.email.hasError('required') ? '*Email required' :
-        this.email.hasError('email') ? 'Not a valid email' : '';
-  }
-  getPasswordErrorMessage() {
-    return this.password.hasError('required') ? '*Password required' : '';
+
+  get controls() {
+    return this.crazyForm.controls;
   }
   onChangeAvatar() {
-    this.avatar = (this.password.value.length > 0) ? "close" : "open";
+    this.avatar = (this.controls.password.value.length > 0) ? "close" : "open";
+  }
+  onFormSubmit() {
+    if(this.crazyForm.valid) {
+      console.log(this.crazyForm.value)
+    }
   }
 }
